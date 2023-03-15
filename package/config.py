@@ -6,6 +6,7 @@ import package.helpers as helpers
 
 # Import external modules
 import time
+import configparser
 
 # Variables
 MAX_ATTEMPTS = 3
@@ -14,6 +15,24 @@ HOLD_TIME = 0.05
 
 o = Objects()
 c = Colors()
+
+class ServerSettings():
+    """ Configures the server settings from a .ini file. """
+    def __init__(self, fp: str = 'instance/ss.ini') -> None:
+        self.fp = fp
+        self.cp = configparser.ConfigParser()
+
+        self.host = None
+        self.port = None
+        self.debug = None
+
+    def init(self) -> None:
+        """ Initialize the server settings """
+        self.cp.read(self.fp)
+
+        self.host = self.cp['SERVER']['host']
+        self.port = self.cp['SERVER']['port']
+        self.debug = self.cp['SERVER']['debug']
 
 class Setup():
     """ Prepares the server for deployment. Attempts to solve any problem discovered, however raises an error if it fails. """
