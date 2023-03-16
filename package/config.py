@@ -5,6 +5,8 @@ from package.display import Objects, Colors
 import package.helpers as helpers
 
 # Import external modules
+from flask import Flask
+
 import time
 import configparser
 
@@ -36,12 +38,26 @@ class ServerSettings():
 
 class Setup():
     """ Prepares the server for deployment. Attempts to solve any problem discovered, however raises an error if it fails. """
-    def __init__(self, launch: bool = True) -> None:
+    def __init__(self, app: Flask, ss: ServerSettings, launch: bool = True) -> None:
         """ ## Params:
-        `launch (bool) = False`: Should the setup sequence launch Xenon after a successful setup sequence. """
+        `app (Flask)`: The instance of the Flask application.
+        `ss (ServerSettings)`: The server settings of the application. """
         
-        self.launch = launch # Should the setup sequence launch Xenon after a successful setup sequence.
+        self.app = app # The instance of the Flask application.
+        self.ss = ss # The server settings of the application.
         self.failed_tests = [] # A list of failed tests. 
+        self.ready = False # Is `True` if the app is ready for deployment
+
+    def launch_app(self):
+        """ Launches the app """
+        ss = self.ss
+        ss.init()
+
+        self.app.run(
+            host=ss.host,
+            port=ss.port,
+            debug=ss.debug
+        )
 
     def setup_failed(self, tn: str | list):
         """ Called if the system determines that the server has failed to set up the system. """
@@ -57,9 +73,7 @@ class Setup():
         c.success('The setup sequence has successfully been completed.')
         c.information('Xenon is now ready for deployment.')
 
-        if self.launch:
-            # Launch xenon
-            pass
+        self.ready = True
 
     def solve_internet_connectivity(self) -> bool:
         """ Attempts to solve a internet connectivity issue. Will hold awaiting for a connection, after 6 seconds (3 attempts, 2 seconds each), the setup process will exit. """
