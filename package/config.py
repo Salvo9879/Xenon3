@@ -48,17 +48,6 @@ class Setup():
         self.failed_tests = [] # A list of failed tests. 
         self.ready = False # Is `True` if the app is ready for deployment
 
-    def launch_app(self):
-        """ Launches the app """
-        ss = self.ss
-        ss.init()
-
-        self.app.run(
-            host=ss.host,
-            port=ss.port,
-            debug=ss.debug
-        )
-
     def setup_failed(self, tn: str | list):
         """ Called if the system determines that the server has failed to set up the system. """
         if isinstance(tn, list):
