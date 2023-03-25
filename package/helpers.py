@@ -5,6 +5,7 @@ import json
 import requests
 import subprocess
 import os
+import datetime
 
 def get_all_packages():
     """ Gets all packages installed onto the machine. """
@@ -65,3 +66,7 @@ def get_system():
 
     system = os.name
     return system
+
+def get_iso_datetime():
+    dt = datetime.datetime.now().isoformat()
+    return dt

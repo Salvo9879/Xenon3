@@ -3,9 +3,11 @@
 from package.display import Objects, Colors
  
 import package.helpers as helpers
+import package.databases as databases
 
 # Import external modules
 from flask import Flask
+from sqlalchemy_utils import database_exists
 
 import time
 import configparser
@@ -20,7 +22,8 @@ c = Colors()
 
 class ServerSettings():
     """ Configures the server settings from a .ini file. """
-    def __init__(self, fp: str = 'instance/ss.ini') -> None:
+    def __init__(self, app: Flask, fp: str = 'instance/ss.ini') -> None:
+        self.app = app
         self.fp = fp
         self.cp = configparser.ConfigParser()
 
@@ -36,17 +39,25 @@ class ServerSettings():
         self.port = self.cp['SERVER']['port']
         self.debug = self.cp['SERVER']['debug']
 
+        self.db_uris_users = self.cp['DATABASE_URIS']['users']
+
+        self.config_app()
+
+    def config_app(self):
+        """ Configures application settings. """
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = self.db_uris_users
+
 class Setup():
     """ Prepares the server for deployment. Attempts to solve any problem discovered, however raises an error if it fails. """
-    def __init__(self, app: Flask, ss: ServerSettings, launch: bool = True) -> None:
+    def __init__(self, ss: ServerSettings) -> None:
         """ ## Params:
-        `app (Flask)`: The instance of the Flask application.
         `ss (ServerSettings)`: The server settings of the application. """
         
-        self.app = app # The instance of the Flask application.
         self.ss = ss # The server settings of the application.
         self.failed_tests = [] # A list of failed tests. 
         self.ready = False # Is `True` if the app is ready for deployment
+
+        self.app = self.ss.app
 
     def setup_failed(self, tn: str | list):
         """ Called if the system determines that the server has failed to set up the system. """
@@ -63,6 +74,8 @@ class Setup():
         c.information('Xenon is now ready for deployment.')
 
         self.ready = True
+
+
 
     def solve_internet_connectivity(self) -> bool:
         """ Attempts to solve a internet connectivity issue. Will hold awaiting for a connection, after 6 seconds (3 attempts, 2 seconds each), the setup process will exit. """
@@ -150,6 +163,34 @@ class Setup():
 
         return s
     
+    def solve_database_existence_test(self) -> bool:
+        """ Attempts to create any databases that have not been created. Will attempt 3 times, after this the setup process will exit. """
+        time.sleep(HOLD_TIME)
+
+        a = 0
+        c.caution('( ! ) HOLD SETUP')
+        c.process('- Attempting to solve the database existence test.')
+
+        s = False
+        while a < MAX_ATTEMPTS:
+            time.sleep(AWAITING_TIME)
+            a += 1
+
+            db_uri = self.app.config['SQLALCHEMY_DATABASE_URI']
+
+            databases.create_database(self.app, db_uri)
+
+            if self.databases_exist(d=False):
+                s = True
+                c.success(f"Attempt {a} succeeded...")
+                break
+            
+            c.caution(f"Attempt {a} failed...")
+            continue
+
+        return s
+
+
     def is_online(self, d: bool = True) -> bool:
         """ Returns a boolean based whether the machine is online. """
         res = helpers.is_online()
@@ -159,7 +200,7 @@ class Setup():
                 c.success(f"[ {str(res).upper()} ] Internet connectivity test.")
                 return res
             c.error(f"[ {str(res).upper()} ] Internet connectivity test.")
-            return res
+        return res
 
     def is_version_latest(self, d: bool = True) -> bool:
         """ Returns a boolean based whether the version of Xenon installed is the latest version. """
@@ -172,9 +213,7 @@ class Setup():
             if res:
                 c.success(f"[ {str(res).upper()} ] Version matching test.")
                 return res
-            c.error(f"[ {str(res).upper()} ] Version matching test.")
-            return     
-
+            c.error(f"[ {str(res).upper()} ] Version matching test.")     
         return res
     
     def is_pip_configured(self, d: bool = True) -> bool:
@@ -187,7 +226,7 @@ class Setup():
                 return res
             
             c.error(f"[ {str(res).upper()} ] PIP configuration test.")
-            return res
+        return res
 
     def dependencies_loaded(self, d: bool = True) -> tuple:
         """ Tests to check whether all the required packages are installed & up to date onto the machine. """
@@ -206,8 +245,21 @@ class Setup():
                 c.success(f"[ {str(res).upper()} ] Dependency loading test.")
                 return (res, uip)
             c.error(f"[ {str(res).upper()} ] Dependency loading test.")
-            return (res, uip)
         return (res, uip)
+
+    def databases_exist(self, d: bool = True) -> bool:
+        """ Tests whether all databases are created. 
+        NOTE: Currently only works for the `app.config['SQLALCHEMY_DATABASE_URI']`. This code will have to change once we integrate new database. """
+        
+        db_uri = self.app.config['SQLALCHEMY_DATABASE_URI']
+        res = database_exists(db_uri)
+
+        if d:
+            if res:
+                c.success(f"[ {str(res).upper()} ] Database existence test.")
+                return res
+            c.error(f"[ {str(res).upper()} ] Database existence test.")
+        return res
 
     def run(self):
         """ This function tests for various conditions which are essential for the deployment of the server. """
@@ -253,6 +305,16 @@ class Setup():
         if not s:
             self.failed_tests.append('Dependency loading test')
         
+        time.sleep(HOLD_TIME)
+        t5_r = s = self.databases_exist()
+        if not t5_r:
+            s = self.solve_database_existence_test()
+            if not s:
+                self.setup_failed(tn='Database existence test')
+                return
+            if not s:
+                self.failed_tests.append('Database existence test')
+
         if not self.failed_tests:
             self.setup_successful()
             return
