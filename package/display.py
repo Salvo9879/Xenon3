@@ -1,7 +1,4 @@
 
-# Import internal modules
-import package.helpers as helpers
-
 # Import external modules
 import os
 
@@ -23,26 +20,25 @@ class Colors():
 
     @property
     def point(self):
-        p = {
-            # Fore
-            'fR': self.f.RED, # Error
-            'fG': self.f.GREEN, # Success
-            'fY': self.f.YELLOW, # Caution
-            'fB': self.f.BLUE, # Instructions
-            'fM': self.f.MAGENTA, # Process
-            'fC': self.f.CYAN, # Title
-            'fW': self.f.WHITE, # Information
-            'fX': self.f.RESET, # Reset
+        if self.colorama_installed:
+            p = {
+                'fR': self.f.RED, # Error
+                'fG': self.f.GREEN, # Success
+                'fY': self.f.YELLOW, # Caution
+                'fB': self.f.BLUE, # Instructions
+                'fM': self.f.MAGENTA, # Process
+                'fC': self.f.CYAN, # Title
+                'fW': self.f.WHITE, # Information
+                'fX': self.f.RESET, # Reset
 
-            # Styles
-            'sN': self.s.NORMAL, # Normal
-            'sB': self.s.BRIGHT, # Bright
-            'sX': self.s.RESET_ALL, # Reset
-        }
-
-        if not self.colorama_installed:
-            for key in p:
-                p[key] = ''
+                # Styles
+                'sN': self.s.NORMAL, # Normal
+                'sB': self.s.BRIGHT, # Bright
+                'sX': self.s.RESET_ALL, # Reset
+            }
+        else:
+            p = {'fR': '','fG': '','fY': '','fB': '','fM': '','fC': '','fW': '','fX': '','sN': '','sB': '','sX': ''}
+        
         return p
     
     @property
@@ -99,7 +95,7 @@ class Actions():
     """ Simple actions that changes how the user interacts with the terminal. """
     def clr_scr(self):
         """ Clears the terminal. """
-        system = helpers.get_system()
+        system = os.name
 
         os.system('cls' if system == 'nt' else 'clear')
 
