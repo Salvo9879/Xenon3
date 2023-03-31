@@ -129,7 +129,9 @@ class Solvers():
         """ Attempts to solve the dependency installation text & returns a boolean based on whether it was successful. """
         uds = self.h.get_uninstalled_dependencies()
         for d in uds:
-            subprocess.run(f"pip install {d}")
+            # print(f"Downloading: {d}")
+            c.process(f"Installing dependency: {d}...")
+            subprocess.run(f"pip install {d}", capture_output=False)
 
 
 class Setup():
@@ -139,13 +141,14 @@ class Setup():
         self.s = Solvers()
 
         self.ft = []
+        self.setup_successful = False
 
     def setup_failed(self, n: str):
         """ Raised when the setup sequence has failed. """
         self.ft.append(n)
         
         o.header(title='Setup failure', clr_scr=False)
-        c.error(f"Setup failed on: {','.join(self.ft)}")
+        c.error(f"Setup failed on: {','.join(self.ft)}.")
         exit()
 
     def internet_connectivity_setup(self):
@@ -197,6 +200,8 @@ class Setup():
         c.success(f"[ {str(tr).upper()} ] - {n}.")
             
     def run(self):
+        """ Runs the entire setup sequence. """
+
         o.header(title='Setup sequence')
         c.process('Setting up the machine for Xenon...\n')
 
@@ -208,3 +213,5 @@ class Setup():
 
         time.sleep(SEQUENCE_AWAIT_TIME)
         self.dependency_installation_setup()
+
+        self.setup_successful = True
