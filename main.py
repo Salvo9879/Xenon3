@@ -3,13 +3,16 @@
 from package.setup import Setup
 
 # Variables
-su = Setup()
-    
+setup = Setup()
 
 if __name__ == '__main__':
-    su.run()
+    setup.run()  
 
-    if su.setup_successful:
-        from package.server import app
+    if setup.ss:
+        from package.server import app, settings
 
-        app.run()
+        app.run(
+            host=settings.host,
+            port=settings.port,
+            debug=settings.debug
+        )
