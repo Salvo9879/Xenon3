@@ -29,7 +29,7 @@ class Colors():
                 'fB': self.f.BLUE, # Information
                 'fM': self.f.MAGENTA, # Process
                 'fC': self.f.CYAN, # Title
-                'fW': self.f.WHITE, # Instructions
+                'fW': self.f.WHITE, # Other
                 'fX': self.f.RESET, # Reset
 
                 # Styles
@@ -71,7 +71,7 @@ class Colors():
         p = self.point
         self.colored_print(f"{p['fY']}{msg}")
 
-    def instruction(self, msg: str) -> None:
+    def other(self, msg: str) -> None:
         """ Prints text with color for instructions. """
         p = self.point
         self.colored_print(f"{p['fW']}{msg}")
