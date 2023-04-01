@@ -12,7 +12,8 @@ except:
 class Colors():
     """ Colors which can be used to colorize terminal elements. """
     def __init__(self) -> None:
-        if self.colorama_installed:
+        self.ci = self.colorama_installed
+        if self.ci:
             import colorama
             self.f = colorama.Fore
             self.b = colorama.Back
@@ -20,15 +21,15 @@ class Colors():
 
     @property
     def point(self):
-        if self.colorama_installed:
+        if self.ci:
             p = {
                 'fR': self.f.RED, # Error
                 'fG': self.f.GREEN, # Success
                 'fY': self.f.YELLOW, # Caution
-                'fB': self.f.BLUE, # Instructions
+                'fB': self.f.BLUE, # Information
                 'fM': self.f.MAGENTA, # Process
                 'fC': self.f.CYAN, # Title
-                'fW': self.f.WHITE, # Information
+                'fW': self.f.WHITE, # Instructions
                 'fX': self.f.RESET, # Reset
 
                 # Styles
@@ -73,7 +74,7 @@ class Colors():
     def instruction(self, msg: str) -> None:
         """ Prints text with color for instructions. """
         p = self.point
-        self.colored_print(f"{p['fB']}{msg}")
+        self.colored_print(f"{p['fW']}{msg}")
 
     def process(self, msg: str) -> None:
         """ Prints text with color for processes. """
@@ -88,7 +89,7 @@ class Colors():
     def information(self, msg: str) -> None:
         """ Prints text with color for information. """
         p = self.point
-        self.colored_print(f"{p['fW']}{msg}")
+        self.colored_print(f"{p['fB']}{msg}")
 
 
 class Actions():
