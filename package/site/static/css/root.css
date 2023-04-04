@@ -1,0 +1,97 @@
+/* Root styles taken from the style-guide. */
+
+/* Text sizes */
+
+    /* Headers */
+    h1, h2, h3, h4, h5, h6,
+    .title-description, .page-content, .page-keyword, .footer-content, .footer-keyword, .small_print-content, .small_print-keyword, .input-content {
+        font-family: 'Outfit';
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%;
+    }
+
+    h1 { /* Used as a page title. */
+        font-size: 56px;
+    }
+
+    h2 { /* Used as content header 1. */
+        font-size: 48px;
+    }
+
+    h3 { /* Used as content header 2. */
+        font-size: 40px;
+    }
+
+    h4 { /* Used as an alert title.  */
+        font-size: 32px;
+    }
+
+    h5 { /* Used as a notification title. */
+        font-size: 24px;
+    }
+
+    h6 { /* Used as a footer title. */
+        font-size: 20px;
+    }
+
+    /* Text */
+    .title-description, .page-content, .page-keyword, .footer-content, .footer-keyword, .small_print-content, .small_print-keyword, .input-content {
+        line-height: 150%;
+    }
+
+    .title-description { /* Used under a title description to describe the page content. */
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    .page-content { /* Text used for page content. */
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    .page-keyword { /* Shows a keyword in page content. */
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .footer-content { /* Text used for footer content. */
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .footer-keyword { /* Shows a keyword in footer content. */
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .small_print-content { /* Text used to show small print content. */
+        font-weight: 400;
+        font-size: 12px;
+    }
+
+    .small_print-keyword { /* Shows a keyword in small print content. */
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    .input-content { /* Text used in a button or in an input. */
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+/* Colors */
+
+    /* Background */
+    .background-header, /* Used for the header of the page. */
+    .background-navigation { /* Used for the navigation of certain pages. */
+        background-color: #171717; 
+    }
+
+    .background-content { /* Used as a general backdrop of page content. */
+        background-color: #1E1E1E;
+    }
+
+    .background-selected-element { /* Used to show a selected element. Usually in the header or navigation */
+        background-color: #2D2D2D;
+    }
