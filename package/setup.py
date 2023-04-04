@@ -5,7 +5,6 @@ import package.package_handler as ph
 
 # Import external modules
 import socket
-import json
 import urllib.request
 import subprocess
 import time
@@ -182,16 +181,15 @@ class Solvers():
 
     def solve_db_creation(self):
         """ Attempts to solve the database creation test. """
-        from sqlalchemy_utils import create_database
+        from package.databases import db
+        from package.server import app
 
-        uf_dbs = self.h.get_unformed_databases()
-        for db_i in uf_dbs:
-            n, p = db_i
-            c.process(f"Attempting to create database: '{n}'...")
-            try:
-                create_database(p)
-            except Exception as e:
-                c.caution(e)
+        c.process(f"Attempting to create databases...")
+        try:
+            with app.app_context():
+                db.create_all()
+        except Exception as e:
+            c.caution(e)
 
 
 
