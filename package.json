@@ -3,6 +3,7 @@
     "app-settings-path": "instance/as.ini",
     "version": "v1.0.1",
     "db-paths": {
-        "users": "sqlite:///C:\\Users\\salva\\Documents\\Projects\\Advanced Projects\\Xenon3\\instance\\users.db"
+        "users": "sqlite:///C:\\Users\\salva\\Documents\\Projects\\Advanced Projects\\Xenon3\\instance\\users.db",
+        "applications": "sqlite:///C:\\Users\\salva\\Documents\\Projects\\Advanced Projects\\Xenon3\\instance\\applications.db"
     }
 }

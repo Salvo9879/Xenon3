@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy()
 
 class Users(db.Model):
+    """ A database which stores information about the user profiles. """
     id = db.Column(db.Integer, primary_key=True)
     uuid = db.Column(db.String, nullable=False, default=helpers.get_uuid())
 
@@ -37,3 +38,17 @@ class Users(db.Model):
     def verify_password(self, pwd: str) -> bool:
         """ Returns a boolean based on if a given text-based password is correct based on a hashed version. """
         return check_password_hash(pwd)
+
+class Applications(db.Model):
+    """ A database which stores information about applications stored on the Xenon system """
+    __bind_key__ = 'applications'
+
+    id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(db.String, nullable=False)
+
+    name = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=False)
+    version = db.Column(db.String, nullable=False)
+
+    developers = db.Column(db.String, nullable=False)
+    icon_path = db.Column(db.String, nullable=False)

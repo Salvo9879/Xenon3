@@ -14,6 +14,9 @@ settings = AppSettings()
 # Application configuration
 app.config['SECRET_KEY'] = settings.secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = ph.get_db_paths()['users']
+app.config['SQLALCHEMY_BINDS'] = {
+    'applications': ph.get_db_paths()['applications']
+}
 
 # External configuration
 db.init_app(app)
