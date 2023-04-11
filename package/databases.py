@@ -1,5 +1,7 @@
 
 # Import internal modules
+from package.exceptions import ApplicationAlreadyPinned
+
 import package.helpers as helpers
 
 # Import external modules
@@ -25,6 +27,8 @@ class Users(db.Model):
 
     hashed_password = db.Column(db.String, nullable=False)
 
+    pinned_apps = db.Column(db.PickleType, nullable=False, default=[])
+
     @property
     def password(self) -> AttributeError:
         """ Raises an error if the application attempts to read the attribute. """
@@ -38,6 +42,31 @@ class Users(db.Model):
     def verify_password(self, pwd: str) -> bool:
         """ Returns a boolean based on if a given text-based password is correct based on a hashed version. """
         return check_password_hash(pwd)
+    
+    def pin_app(self, app_uuid: str) -> None:
+        """ Adds an app uuid to the pinned apps column. """
+        pa = self.pinned_apps.copy()
+
+        if app_uuid in pa:
+            raise ApplicationAlreadyPinned(app_uuid)
+
+        pa.append(app_uuid)
+        self.pinned_apps = pa
+
+        db.session.commit()
+
+    def unpin_app(self, app_uuid: str) -> None:
+        """ Removes an app uuid from the pinned apps column. """
+        pa = self.pinned_apps
+
+        if not app_uuid in pa:
+            return
+        
+        pa.remove(app_uuid)
+        self.pinned_apps = pa
+
+        db.session.commit()
+
 
 class Applications(db.Model):
     """ A database which stores information about applications stored on the Xenon system """
