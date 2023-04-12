@@ -2,6 +2,7 @@
 # Import internal modules
 from package.databases import db
 from package.config import AppSettings
+from package.applications_handler import ApplicationManager
 
 import package.package_handler as ph
 
@@ -11,6 +12,8 @@ from flask import Flask
 # Variables
 app = Flask(__name__)
 settings = AppSettings()
+application_manager = ApplicationManager()
+
 # Application configuration
 app.config['SECRET_KEY'] = settings.secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = ph.get_db_paths()['users']

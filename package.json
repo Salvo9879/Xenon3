@@ -1,5 +1,6 @@
 {
     "get-file-url": "https://raw.githubusercontent.com/Salvo9879/Xenon3/main",
+    "available-application-url": "https://raw.githubusercontent.com/Salvo9879/Xenon-applications/main/applications.json",
     "app-settings-path": "instance/as.ini",
     "version": "v1.0.1",
     "db-paths": {
