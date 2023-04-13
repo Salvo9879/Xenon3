@@ -5,3 +5,6 @@ class ApplicationAlreadyPinned(Exception):
 class ApplicationUnavailable(Exception):
     """ Raised when the system checks for an application at the Xenon server, however the referenced github repo is invalid or if the app uuid isn't even referenced by the Xenon application servers. """
     pass
+
+class ApplicationNotInstalled(Exception):
+    """ Raised when the system is attempting to access data from an application that is not installed on the Xenon system. """

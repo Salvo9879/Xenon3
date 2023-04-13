@@ -1,6 +1,7 @@
 
 # Import internal modules
-from package.exceptions import ApplicationUnavailable
+from package.exceptions import ApplicationUnavailable, ApplicationNotInstalled
+from package.databases import db, Applications
 
 import package.package_handler as ph
 
@@ -10,6 +11,7 @@ from git.repo import Repo
 import requests
 import os
 import git
+import importlib
 
 # TODO: Create barrier which prevents applications being downloaded or deleted without ADMIN authentication.
 
@@ -28,6 +30,12 @@ class ApplicationManager():
 
         return app_uuid in aa
     
+    def is_application_installed(self, app_uuid: str) -> bool:
+        """ Checks whether an application is installed on the Xenon system. """
+
+        abs_path = os.path.abspath(f"package/applications/{app_uuid}")
+        return os.path.exists(abs_path)
+    
     def get_application_abs_path(self, app_uuid: str) -> str:
         """ Returns the absolute path of the application. """
         return os.path.abspath(f"package/applications/{app_uuid}")
@@ -39,6 +47,55 @@ class ApplicationManager():
         
         aa = self.get_available_applications()
         return aa[app_uuid]
+    
+    def get_application_data(self, app_uuid: str) -> dict:
+        """ Gets the applications metadata hardcoded in its `main.py` file. """
+        if not self.is_application_installed(app_uuid):
+            raise ApplicationNotInstalled(app_uuid)
+        
+        path = f"package.applications.{app_uuid}.main"
+        a = importlib.import_module(path)
+        
+        md = {
+            'uuid': a.UUID,
+            'name': a.NAME,
+            'description': a.DESCRIPTION,
+            'version': a.VERSION,
+            'developers': a.DEVELOPERS,
+            'icon_path': a.ICON_PATH
+        }
+
+        return md
+
+    def add_application_to_db(self, app_uuid: str) -> None:
+        """ Adds the application to the database. """
+        ad = self.get_application_data(app_uuid)
+        
+        a = Applications()
+        a.uuid = ad['uuid']
+        a.name = ad['name']
+        a.description = ad['description']
+        a.version = ad['version']
+        a.developers = ad['developers']
+        a.icon_path = ad['icon_path']
+
+        db.session.add(a)
+        db.session.commit()
+
+        print(Applications.query.all())
+
+    def remove_application_from_db(self, app_uuid: str) -> None:
+        """ Removes an applications row in the database. """
+        a = Applications.query.filter_by(uuid=app_uuid).first()
+        print(a)
+
+        if a is None:
+            return
+        
+        db.session.delete(a)
+        db.session.commit()
+
+        print(Applications.query.all())
 
     def download_application(self, app_uuid: str) -> None:
         """ Downloads an an available application from a referenced github repo. """
@@ -49,7 +106,12 @@ class ApplicationManager():
         ap = self.get_application_abs_path(app_uuid)
         Repo.clone_from(a_url, ap)
 
+        self.add_application_to_db(app_uuid)
+
     def delete_application(self, app_uuid: str) -> None:
+        """ Completely deletes an application off the Xenon system. """
         ap = self.get_application_abs_path(app_uuid)
 
         git.rmtree(ap)
+
+        self.remove_application_from_db(app_uuid)

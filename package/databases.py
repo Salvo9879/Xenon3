@@ -73,7 +73,7 @@ class Applications(db.Model):
     __bind_key__ = 'applications'
 
     id = db.Column(db.Integer, primary_key=True)
-    uuid = db.Column(db.String, nullable=False)
+    uuid = db.Column(db.String, nullable=False, unique=True)
 
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
