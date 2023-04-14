@@ -3,6 +3,7 @@
 from package.databases import db
 from package.config import AppSettings
 from package.applications_handler import ApplicationManager
+from package.routes import applications_r
 
 import package.package_handler as ph
 
@@ -23,3 +24,7 @@ app.config['SQLALCHEMY_BINDS'] = {
 
 # External configuration
 db.init_app(app)
+application_manager.register_applications_routes()
+
+# Register app blueprints
+app.register_blueprint(applications_r)

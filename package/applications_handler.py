@@ -2,6 +2,7 @@
 # Import internal modules
 from package.exceptions import ApplicationUnavailable, ApplicationNotInstalled
 from package.databases import db, Applications
+from package.routes import applications_r
 
 import package.package_handler as ph
 
@@ -82,8 +83,6 @@ class ApplicationManager():
         db.session.add(a)
         db.session.commit()
 
-        print(Applications.query.all())
-
     def remove_application_from_db(self, app_uuid: str) -> None:
         """ Removes an applications row in the database. """
         a = Applications.query.filter_by(uuid=app_uuid).first()
@@ -94,8 +93,6 @@ class ApplicationManager():
         
         db.session.delete(a)
         db.session.commit()
-
-        print(Applications.query.all())
 
     def download_application(self, app_uuid: str) -> None:
         """ Downloads an an available application from a referenced github repo. """
@@ -115,3 +112,40 @@ class ApplicationManager():
         git.rmtree(ap)
 
         self.remove_application_from_db(app_uuid)
+
+    def get_installed_applications(self) -> list:
+        """ Returns a list of applications in a `package.applications_handler.Application` instance installed on the Xenon system. """
+        abs_path = os.path.abspath('package/applications')
+
+        ia = []
+        for app_uuid in os.listdir(abs_path):
+            ad = self.get_application_data(app_uuid)
+            ia.append(Application(ad))
+
+        return ia
+
+    def register_applications_routes(self) -> None:
+        """ Registers all the routes for all the applications. """
+        ia = self.get_installed_applications()
+
+        for a in ia:
+            a.register_application_routes()
+
+class Application():
+    def __init__(self, md: dict) -> None:
+        self.uuid = md['uuid']
+        self.name = md['name']
+        self.description = md['description']
+        self.version = md['version']
+        self.developers = md['developers']
+        self.icon_path = md['icon_path']
+
+        app_path = f"package.applications.{self.uuid}.main"
+        self.app_module = importlib.import_module(app_path)
+        self.blueprint = self.app_module.blueprint
+        
+        self.md = md   
+
+    def register_application_routes(self) -> None:
+        """ Registers the applications routes to the base application route. """
+        applications_r.register_blueprint(self.blueprint)
