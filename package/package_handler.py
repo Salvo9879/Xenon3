@@ -40,3 +40,7 @@ def get_db_paths() -> dict:
 def set_db_paths(v: any) -> None:
     """ Sets the `db-paths` in the `package.json`. """
     _modify_package_file('db-paths', v)
+
+def get_available_apps_url() -> str:
+    """ Gets the `available-application-url` from the `package.json` file. """
+    return _get_package_file()['available-application-url']
