@@ -2,7 +2,8 @@
 # Import internal modules
 from package.databases import db
 from package.config import AppSettings
-from package.application_handler import ApplicationManager
+from package.applications_handler import ApplicationManager
+from package.routes import applications_r
 
 import package.package_handler as ph
 
@@ -12,11 +13,18 @@ from flask import Flask
 # Variables
 app = Flask(__name__)
 settings = AppSettings()
-applications_manager = ApplicationManager()
+application_manager = ApplicationManager()
 
 # Application configuration
 app.config['SECRET_KEY'] = settings.secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = ph.get_db_paths()['users']
+app.config['SQLALCHEMY_BINDS'] = {
+    'applications': ph.get_db_paths()['applications']
+}
 
 # External configuration
 db.init_app(app)
+application_manager.register_applications_routes()
+
+# Register app blueprints
+app.register_blueprint(applications_r)
