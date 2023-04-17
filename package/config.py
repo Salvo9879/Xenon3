@@ -1,11 +1,12 @@
 
 # Import internal modules
 from package.display import Colors, Objects
-
 from package.package_handler import get_app_settings_path
 
 # Import external modules
 from configparser import ConfigParser
+
+import os
 
 # Variables 
 c = Colors()
@@ -28,3 +29,6 @@ class AppSettings():
 
         # Application
         self.secret_key = cp.get('APPLICATION', 'secret_key')
+
+        self.template_folder = os.path.abspath('package/site')
+        self.static_folder = os.path.abspath('package/site')

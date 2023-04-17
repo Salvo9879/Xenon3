@@ -1,6 +1,10 @@
 {
     "cSpell.words": [
+        "formrequest",
+        "formrequests",
+        "fullname",
         "setdefaulttimeout",
-        "sqlalchemy"
+        "sqlalchemy",
+        "wtforms"
     ]
 }
