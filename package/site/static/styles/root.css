@@ -33,7 +33,27 @@
         --co-te-subtext: #8B8B8B;
 
         /* Theme */
-        --co-th: #01A3FF;
+        --co-th-primary: #01A3FF;
+        --co-th-neutral: #8B8B8B;
+
+    /* Other */
+    --bo-ra: 6px; /* Border radius */
+    --tr-ti: 0.3s; /* Transition time */
+}
+
+/* Default styles */
+* {
+    font-family: 'Outfit';
+
+    margin: 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+
+    width: 100vw;
+    height: 100vh;
 }
 
 /* Auto layout */
@@ -60,6 +80,11 @@
     .al-a-center {
         align-items: center;
         justify-content: center;
+    }
+
+    /* Wrap */
+    .al-w-wrap {
+        flex-wrap: wrap;
     }
 
     /* Row alignment */
@@ -187,3 +212,26 @@
     h6 {
         font-size: var(--si-he-h6);
     }
+
+/* Preset elements */
+    /* Inputs */
+        /* Buttons */
+            .btn-clear {
+                background-color: transparent;
+
+                border: none;
+                border-radius: var(--bo-ra);
+
+                cursor: pointer;
+
+                transition: var(--tr-ti);
+            }
+
+            .btn-full {
+                border: none;
+                border-radius: var(--bo-ra);
+
+                cursor: pointer;
+
+                transition: var(--tr-ti);
+            }
