@@ -7,11 +7,12 @@ import package.helpers as helpers
 # Import external modules
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 # Variables
 db = SQLAlchemy()
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     """ A database which stores information about the user profiles. """
     id = db.Column(db.Integer, primary_key=True)
     uuid = db.Column(db.String, nullable=False, default=helpers.get_uuid())
@@ -41,7 +42,7 @@ class Users(db.Model):
 
     def verify_password(self, pwd: str) -> bool:
         """ Returns a boolean based on if a given text-based password is correct based on a hashed version. """
-        return check_password_hash(pwd)
+        return check_password_hash(self.hashed_password, pwd)
     
     def pin_app(self, app_uuid: str) -> None:
         """ Adds an app uuid to the pinned apps column. """
