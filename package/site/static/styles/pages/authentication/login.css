@@ -1,0 +1,34 @@
+#page-content {
+    --al-eg: 50px;
+    
+    width: 100%;
+    height: 100%;
+}
+
+#page-title {
+    color: var(--co-te-primary);
+}
+
+#login_inputs-container {
+    --al-eg: 20px;
+}
+
+.input_label-container {
+    --al-eg: 5px;
+}
+
+.input-label {
+    color: var(--co-te-primary);
+}
+
+.error-message {
+    color: var(--co-se-error);
+}
+
+#general_error-content {
+    padding: 25px;
+
+    border-radius: var(--bo-ra);
+
+    background-color: var(--co-se-caution);
+}

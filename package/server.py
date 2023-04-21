@@ -3,9 +3,10 @@
 from package.databases import db, Users
 from package.config import AppSettings
 from package.applications_handler import ApplicationManager
-from package.routes import api_r, authentication_r
+from package.routes import api_r, authentication_r, dashboard_r
 
 import package.package_handler as ph
+import package.helpers
 
 # Import external modules
 from flask import Flask
@@ -34,8 +35,15 @@ application_manager.register_applications_routes()
 # Blueprint registration
 app.register_blueprint(api_r)
 app.register_blueprint(authentication_r)
+app.register_blueprint(dashboard_r)
 
 # User loader
 @login_manager.user_loader
 def load_user(user_id: str) -> Users:
     return Users.query.get(int(user_id))
+
+# Context processors
+@app.context_processor
+def inject_helpers():
+    """ Injects `package.helpers` into all jinja templating. """
+    return dict(h=package.helpers)

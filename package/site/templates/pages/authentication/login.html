@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    {% include 'templates/components/head.html' %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='static/styles/pages/authentication/login.css') }}">
+
+    <title>Login to Xenon</title>
+</head>
+<body>
+    <div id="page-content" class="al-el al-d-column al-a-center">
+        <h1 id="page-title">Login to Xenon</h1>
+        <form action="{{ url_for('api.formrequests.authentication.login_fr') }}" method="post">
+            {{ lf.csrf_token }}
+            <div id="login_inputs-container" class="al-el al-d-column al-a-center_h">
+                <div class="input_label-container al-el al-r al-d-column">
+                    <label for="username-input" id="username-label" class="input-label te-small_print-keyword">Username</label>
+                    <input type="text" name="username" id="username-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="email" data-state="{{ username_state }}">
+                    <p class="error-message te-small_print-content">{{ username_error_msg }}</p>
+                </div>
+                <div class="input_label-container al-el al-r al-d-column">
+                    <label for="password-input" id="password-label" class="input-label te-small_print-keyword">Password</label>
+                    <input type="password" name="password" id="password-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="current-password" data-state="{{ password_state }}">
+                    <p class="error-message te-small_print-content">{{ password_error_msg }}</p>
+                </div>
+    
+                <button type="submit" class="btn-submit te-input-content">Login</button>
+
+                {% if not general_error_msg is none %}
+                    <p id="general_error-content">{{ general_error_msg }}</p>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</body>
+</html>

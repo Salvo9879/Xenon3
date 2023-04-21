@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% include 'templates/components/head.html' %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='static/styles/pages/authentication/signup.css') }}">
+    <script src="{{ url_for('static', filename='static/scripts/pages/authentication/signup.js') }}" defer></script>
+
+    <title>Signup to Xenon</title>
+</head>
+<body>
+    <div id="page-content" class="al-el al-d-column al-a-center">
+        <h1 id="page-title">Signup to Xenon</h1>
+        <form action="{{ url_for('api.formrequests.authentication.signup_fr') }}" method="post">
+            {{ sf.csrf_token }}
+            <div id="signup_inputs-container" class="al-el al-d-column al-a-center_h">
+                <div id="names-container" class="signup_inputs-subcontainer al-el al-r al-d-row">
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="forename-input" id="forename_input-label" class="input-label te-small_print-keyword">Forename</label>
+                        <input type="text" name="forename" id="forename-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="given-name" data-state="{{ forename_state }}">
+                        <p class="error-message te-small_print-content">{{ forename_error_msg }}</p>
+                    </div>
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="surname-input" id="surname_input-label" class="input-label te-small_print-keyword">Surname</label>
+                        <input type="text" name="surname" id="surname-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="family-name" data-state="{{ surname_state }}">
+                        <p class="error-message te-small_print-content">{{ surname_error_msg }}</p>
+                    </div>
+                </div>
+    
+    
+    
+                <div id="identifications-container" class="signup_inputs-subcontainer al-el al-r al-d-row">
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="username-input" id="username_input-label" class="input-label te-small_print-keyword">Username</label>
+                        <input type="text" name="username" id="username-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="username" data-state="{{ username_state }}">
+                        <p class="error-message te-small_print-content">{{ username_error_msg }}</p>
+                    </div>
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="email-input" id="email_input-label" class="input-label te-small_print-keyword">Email</label>
+                        <input type="email" name="email" id="email-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="email" data-state="{{ email_state }}">
+                        <p class="error-message te-small_print-content">{{ email_error_msg }}</p>
+                    </div>
+                </div>
+    
+    
+    
+                <div id="birthdate-container" class="signup_inputs-subcontainer al-el al-r al-d-row">
+                    <div id="birthdate_day_label_container" class="input_labels-container al-el al-r al-d-column">
+                        <label for="birthdate_day-input" id="birthdate_day_input-label" class="input-label te-small_print-keyword">Day</label>
+                        <select name="birthdate_day" id="birthdate_day-input" class="sel_field-basic input-w-125 te-input-content" required autocomplete="bday-day" data-state="{{ birthdate_day_state }}">
+                            {% for d in h.get_31() %}
+                                <option value="{{ d }}">{{ d }}</option>
+                            {% endfor %}
+                        </select>
+                        <p class="error-message te-small_print-content">{{ birthdate_day_error_msg }}</p>
+                    </div>
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="birthdate_month-input" id="birthdate_month_input-label" class="input-label te-small_print-keyword">Month</label>
+                        <select name="birthdate_month" id="birthdate_month-input" class="sel_field-basic input-w-125 te-input-content" required autocomplete="bday-month" data-state="{{ birthdate_month_state }}">
+                            {% for m in h.get_month_names() %}
+                                <option value="{{ loop.index }}">{{ m.capitalize() }}</option>
+                            {% endfor %}
+                        </select>
+                        <p class="error-message te-small_print-content">{{ birthdate_month_error_msg }}</p>
+                    </div>
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="birthdate_year-input" id="birthdate_year_input-label" class="input-label te-small_print-keyword">Month</label>
+                        <select name="birthdate_year" id="birthdate_year-input" class="sel_field-basic input-w-125 te-input-content" required autocomplete="bday-year" data-state="{{ birthdate_year_state }}">
+                            {% for y in h.get_last_100_years() %}
+                                <option value="{{ y }}">{{ y }}</option>
+                            {% endfor %}
+                        </select>
+                        <p class="error-message te-small_print-content">{{ birthdate_year_error_msg }}</p>
+                    </div>
+                </div>
+    
+    
+    
+                <div id="passwords-container" class="signup_inputs-subcontainer al-el al-r al-d-row">
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="password_alpha-input" id="password_alpha_input-label" class="input-label te-small_print-keyword">Password</label>
+                        <input type="password" name="password_alpha" id="password_alpha-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="new-password" data-state="{{ password_alpha_state }}">
+                        <p class="error-message te-small_print-content">{{ password_alpha_error_msg }}</p>
+                    </div>
+                    <div class="input_labels-container al-el al-r al-d-column">
+                        <label for="password_beta-input" id="password_beta_input-label" class="input-label te-small_print-keyword">Re-enter password</label>
+                        <input type="password" name="password_beta" id="password_beta-input" class="str_field-basic input-w-300 te-input-content" required autocomplete="new-password" data-state="{{ password_beta_state }}">
+                        <p class="error-message te-small_print-content">{{ password_beta_error_msg }}</p>
+                    </div>
+                </div>
+    
+                <button type="submit" class="btn-submit te-input-content">Sign up</button>
+            </div>
+
+            {% if not general_error_msg is none %}
+                <p id="general_error-content">{{ general_error_msg }}</p>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>

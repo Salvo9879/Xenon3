@@ -1,0 +1,46 @@
+* {
+    /* outline: 1px red solid; */
+}
+
+#page-content {
+    --al-eg: 50px;
+    
+    width: 100%;
+    height: 100%;
+}
+
+#page-title {
+    color: var(--co-te-primary);
+}
+
+#signup_inputs-container {
+    --al-eg: 20px;
+}
+
+.signup_inputs-subcontainer {
+    --al-eg: 10px
+}
+
+.input_labels-container {
+    --al-eg: 5px;
+}
+
+#birthdate_day_label_container {
+    width: 125px;
+}
+
+.input-label {
+    color: var(--co-te-primary);
+}
+
+.error-message {
+    color: var(--co-se-error);
+}
+
+#general_error-content {
+    padding: 25px;
+
+    border-radius: var(--bo-ra);
+
+    background-color: var(--co-se-caution);
+}
