@@ -106,8 +106,6 @@ def signup():
             if error_name == 'general':
                 general_error_msg = message[error_name]
 
-        general_error_msg = 'Could not create your account'
-
     return render_template(
         'templates/pages/authentication/signup.html', sf=sf, 
         forename_state=forename_state, surname_state=surname_state, username_state=username_state, email_state=email_state, birthdate_day_state=birthdate_day_state, birthdate_month_state=birthdate_month_state, birthdate_year_state=birthdate_year_state, password_alpha_state=password_alpha_state, password_beta_state=password_beta_state,

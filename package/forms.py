@@ -9,10 +9,12 @@ from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, EmailField, SelectField
 
 class LoginForm(FlaskForm):
+    """ The login form used in the login process. Takes in only 2 inputs: username & password. """
     username = StringField(validators=[DataRequired(), InvalidUsername()])
     password = PasswordField(validators=[DataRequired(), IncorrectPassword()])
 
 class SignupForm(FlaskForm):
+    """ The signup form used in the signup process. Takes in 9 inputs: forename, surname, username, email, birthdate day, birthdate month, birthdate year, password, re-enter password. """
     forename = StringField(validators=[DataRequired()])
     surname = StringField(validators=[DataRequired()])
 

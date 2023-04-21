@@ -38,7 +38,9 @@
 }
 
 #general_error-content {
-    padding: 25px;
+    padding: 20px;
+
+    margin-top: 20px;
 
     border-radius: var(--bo-ra);
 

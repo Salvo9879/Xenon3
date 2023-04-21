@@ -8,6 +8,7 @@ from wtforms.validators import ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
 class InvalidUsername():
+    """ Used only when logging in on the username field. Checks if a provided username is stored in the database. """
     def __init__(self, message: str | None = None) -> None:
         if message is None:
             message = 'An account with this username does not exist.'
@@ -19,6 +20,7 @@ class InvalidUsername():
             raise ValidationError(self.message)
 
 class IncorrectPassword():
+    """ Used only when logging in on the email field. Checks if a provided email is stored in the database. """
     def __init__(self, message: str | None = None) -> None:
         if message is None:
             message = 'The password provided is incorrect.'
@@ -33,6 +35,7 @@ class IncorrectPassword():
             raise ValidationError(self.message)
         
 class UniqueUsername():
+    """ Used only when signing up on the username field. Checks if a provided username is unique. """
     def __init__(self, message: str | None = None) -> None:
         if message is None:
             message = 'An account with this username already exists.'
@@ -44,6 +47,7 @@ class UniqueUsername():
             raise ValidationError(self.message)
         
 class UniqueEmail():
+    """ Used only when signing up on the email field. Checks if a provided email is unique. """
     def __init__(self, message: str | None = None) -> None:
         if message is None:
             message = 'An account with this email already exists.'
@@ -55,6 +59,7 @@ class UniqueEmail():
             raise ValidationError(self.message)
         
 class DayMonthMatch():
+    """ Checks if the users birthdate day matches it largest day in its month. Example will raise a `ValidationError` if the user enters day `31` on `February`. """
     def __init__(self, message: str | None = None) -> None:
         if message is None:
             message = 'The amount days given does not match the month provided.'
