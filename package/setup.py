@@ -182,11 +182,11 @@ class Solvers():
     def solve_db_creation(self):
         """ Attempts to solve the database creation test. """
         from package.databases import db
-        from package.server import app
+        from package.server import settings
 
         c.process(f"Attempting to create databases...")
         try:
-            with app.app_context():
+            with settings.app_context():
                 db.create_all()
         except Exception as e:
             c.caution(e)

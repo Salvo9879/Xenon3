@@ -1,6 +1,7 @@
 
 # Import internal modules
-from package.exceptions import ApplicationAlreadyPinned
+from package.exceptions import ApplicationAlreadyPinned, NotificationReceivedAgain
+from package.notifications import Notification
 
 import package.helpers as helpers
 
@@ -30,10 +31,17 @@ class Users(db.Model, UserMixin):
 
     pinned_apps = db.Column(db.PickleType, nullable=False, default=[])
 
+    notification_box = db.Column(db.PickleType, nullable=False, default=[])
+
     @property
     def password(self) -> AttributeError:
         """ Raises an error if the application attempts to read the attribute. """
         raise AttributeError('Cannot read attribute \'password\'')
+    
+    @property
+    def notification_box_empty(self) -> bool:
+        """ Returns `True` if the notification box is empty. """
+        return not []
     
     @password.setter
     def password(self, pwd: str) -> None:
@@ -65,6 +73,31 @@ class Users(db.Model, UserMixin):
         
         pa.remove(app_uuid)
         self.pinned_apps = pa
+
+        db.session.commit()
+
+    def add_notification(self, n: Notification) -> None:
+        """ Adds a `package.notifications.Notifications` object to the users notification box. """
+        nb = self.notification_box.copy()
+
+        for no in nb:
+            if no.notification_uuid == n.notification_uuid:
+                raise NotificationReceivedAgain(n.notification_uuid)
+            
+        nb.append(n)
+        self.notification_box = nb
+
+        db.session.commit()
+
+    def delete_notification(self, notification_uuid: str) -> None:
+        """ Deletes a `package.notifications.Notifications` object from the users notification box. """
+        nb = self.notification_box.copy()
+
+        for i, no in enumerate(nb):
+            if no.notification_uuid == notification_uuid:
+                nb.pop(i)
+
+        self.notification_box = nb
 
         db.session.commit()
 

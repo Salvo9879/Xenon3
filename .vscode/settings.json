@@ -1,9 +1,12 @@
 {
     "cSpell.words": [
         "birthdate",
+        "datetime",
         "formrequest",
         "formrequests",
         "fullname",
+        "gethostname",
+        "psutil",
         "setdefaulttimeout",
         "signup",
         "sqlalchemy",

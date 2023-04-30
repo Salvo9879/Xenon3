@@ -8,3 +8,8 @@ class ApplicationUnavailable(Exception):
 
 class ApplicationNotInstalled(Exception):
     """ Raised when the system is attempting to access data from an application that is not installed on the Xenon system. """
+    pass
+
+class NotificationReceivedAgain(Exception):
+    """ Raised when a notification is sent to the users notification box, however that notification has already been received. """
+    pass
