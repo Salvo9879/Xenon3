@@ -39,7 +39,7 @@
         /* Sematic */
         --co-se-success: #4dff40;
         --co-se-error: #ff2c2c;
-        --co-se-caution: rgb(255, 255, 109);
+        --co-se-caution: #ffff6d;
         --co-se-neutral: #8B8B8B;
 
     /* Other */
@@ -90,6 +90,11 @@ body {
     .al-a-center {
         align-items: center;
         justify-content: center;
+    }
+
+    /* Child presets */
+    .al-spacer {
+        flex-grow: 1;
     }
 
     /* Wrap */
@@ -223,6 +228,13 @@ body {
         font-size: var(--si-he-h6);
     }
 
+/* Overflow */
+.of-e {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Preset elements */
     /* Widths */
     .input-w-300 { width: 300px; }
@@ -298,35 +310,40 @@ body {
             .str_field-basic[data-state=success] { border-color: var(--co-se-success); }
             .str_field-basic[data-state=error] { border-color: var(--co-se-error); }
 
-    /* Select field */
-    .sel_field-basic {
-        background-color: transparent;
+        /* Select field */
+        .sel_field-basic {
+            background-color: transparent;
 
-        padding: 5px;
+            padding: 5px;
 
-        border-width: 2px;
-        border-style: solid;
-        border-color: var(--co-te-primary);
-        border-radius: var(--bo-ra);
+            border-width: 2px;
+            border-style: solid;
+            border-color: var(--co-te-primary);
+            border-radius: var(--bo-ra);
 
-        color: var(--co-te-primary);
+            color: var(--co-te-primary);
 
-        transition: var(--tr-ti);
-    }
+            transition: var(--tr-ti);
+        }
 
-    .sel_field-basic:focus {
-        border-color: var(--co-th-primary);
-        outline: none;
-    }
+        .sel_field-basic:focus {
+            border-color: var(--co-th-primary);
+            outline: none;
+        }
 
-    .sel_field-basic:disabled {
-        cursor: not-allowed;
-        border-color: var(--co-se-neutral);
-    }
+        .sel_field-basic:disabled {
+            cursor: not-allowed;
+            border-color: var(--co-se-neutral);
+        }
 
-    .sel_field-basic[data-state=success] { border-color: var(--co-se-success); }
-    .sel_field-basic[data-state=error] { border-color: var(--co-se-error); }
+        .sel_field-basic[data-state=success] { border-color: var(--co-se-success); }
+        .sel_field-basic[data-state=error] { border-color: var(--co-se-error); }
 
-    .sel_field-basic option {
-        background-color: var(--co-bo-dropdown);
+        .sel_field-basic option {
+            background-color: var(--co-bo-dropdown);
+        }
+
+    /* Data controlled */
+    *[data-visible=false] {
+        display: none;
     }

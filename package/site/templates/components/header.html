@@ -1,0 +1,50 @@
+<header class="al-el">
+    <div id="logo-container">
+        {% include 'static/assets/icons/logo.svg' %}
+    </div>
+    <div class="al-spacer"></div>
+    <div id="action_bar-container" class="al-el al-r al-d-row al-a-center">
+        <button id="internet-btn" class="action_bar-btn btn-clear al-el al-r al-a-center">
+            {% if system.internet.is_connected %}
+                {% include 'static/assets/icons/internet-active.svg' %}
+            {% else %}
+                {% include 'static/assets/icons/internet-inactive.svg' %}
+            {% endif %}
+        </button>
+        <button id="notifications-btn" class="action_bar-btn btn-clear al-el al-r al-a-center">
+            {% if current_user.is_notification_box_empty %}
+                {% include 'static/assets/icons/notifications-empty.svg' %}
+            {% else %}
+                {% include 'static/assets/icons/notifications-unread.svg' %}
+            {% endif %}
+        </button>
+    </div>
+    <div id="datetime-container" class="al-el al-r al-d-column al-a-center_h">
+        <p id="time-content" class="te-page-content datetime-content">{{ system.datetime.current_time }}</p>
+        <p id="date-content" class="te-page-content datetime-content">{{ system.datetime.current_date }}</p>
+    </div>
+    <div id="hamburger_menu-btn-container" class="al-el al-r al-a-center" data-visible="true">
+        <button id="hamburger_menu-btn" class="btn-clear">
+            {% include 'static/assets/icons/hamburger.svg' %}
+        </button>
+    </div>
+</header>
+<menu class="al-el al-d-column">
+    <div class="menu-section al-el al-r al-d-column">
+        <h6 class="section-title">Commonly used</h6>
+        <button class="section-item btn-clear al-el al-d-row al-a-left al-a-center_v" data-redirect-enabled data-redirection_url="{{ url_for('dashboard.index') }}">
+            <span class="item-icon">{% include 'static/assets/icons/dashboard.svg' %}</span>
+            <span class="item-name te-page-content of-e">Dashboard</span>
+        </button>
+
+        <button class="section-item btn-clear al-el al-d-row al-a-left al-a-center_v" data-redirect-enabled data-redirection_url="NONE">
+            <span class="item-icon">{% include 'static/assets/icons/settings.svg' %}</span>
+            <span class="item-name te-page-content of-e">Settings</span>
+        </button>
+
+        <button class="section-item btn-clear al-el al-d-row al-a-left al-a-center_v" data-redirect-enabled data-redirection_url="NONE">
+            <span class="item-icon">{% include 'static/assets/icons/my_devices.svg' %}</span>
+            <span class="item-name te-page-content of-e">My devices</span>
+        </button>
+    </div>
+</menu>
