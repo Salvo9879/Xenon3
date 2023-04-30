@@ -3,6 +3,7 @@
 from package.databases import db, Users
 from package.config import AppSettings
 from package.applications_handler import ApplicationManager
+from package.system_handler import system
 from package.routes import api_r, authentication_r, dashboard_r
 
 import package.package_handler as ph
@@ -31,6 +32,7 @@ app.static_folder = settings.static_folder
 db.init_app(app)
 login_manager.init_app(app)
 application_manager.register_applications_routes()
+system.init_settings(settings)
 
 # Blueprint registration
 app.register_blueprint(api_r)
@@ -47,3 +49,8 @@ def load_user(user_id: str) -> Users:
 def inject_helpers():
     """ Injects `package.helpers` into all jinja templating. """
     return dict(h=package.helpers)
+
+@app.context_processor
+def inject_system():
+    """ Injects the `package.server.system` into all jinja templating. """
+    return dict(system=system)
