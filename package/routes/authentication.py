@@ -22,7 +22,7 @@ def login():
     """ The page which helps the user to log into their profile. """
 
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard.index'))
+        return redirect(url_for('pages.dashboard.index'))
 
     lf = LoginForm()
 
@@ -50,14 +50,14 @@ def login():
 def logout():
     """ Logs out the current user, then redirects to the login page. """
     logout_user()
-    return redirect(url_for('authentication.login'))
+    return redirect(url_for('pages.authentication.login'))
 
 @authentication_r.route('/signup')
 def signup():
     """ The page which helps the user to sign up to Xenon. """
 
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard.index'))
+        return redirect(url_for('pages.dashboard.index'))
 
     sf = SignupForm()
 
@@ -126,12 +126,12 @@ def login_fr():
         s = login_user(u)
         if not s:
             flash({'general': 'There was a problem logging into your account.'})
-            return redirect(url_for('authentication.login'))
+            return redirect(url_for('pages.authentication.login'))
         
-        return redirect(url_for('dashboard.index'))
+        return redirect(url_for('pages.dashboard.index'))
 
     flash(lf.errors)
-    return redirect(url_for('authentication.login'))
+    return redirect(url_for('pages.authentication.login'))
 
 @authentication_formrequests.route('/signup', methods=['POST'])
 def signup_fr():
@@ -148,14 +148,14 @@ def signup_fr():
 
         if u is None:
             flash({'general': 'There was a problem creating your account. Please try again later.'})
-            return redirect(url_for('authentication.signup'))
+            return redirect(url_for('pages.authentication.signup'))
 
         s = login_user(u)
         if not s:
             flash(flash({'general': 'There was a problem logging into your account. Your account was created.'}))
-            return redirect(url_for('authentication.login'))
+            return redirect(url_for('pages.authentication.login'))
         
-        return redirect(url_for('dashboard.index'))
+        return redirect(url_for('pages.dashboard.index'))
 
     flash(sf.errors)
-    return redirect(url_for('authentication.signup'))
+    return redirect(url_for('pages.authentication.signup'))

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- BLOCKS:
+        - imported_styles
+        - imported_scripts
+        - flask_vars
+        - title
+        - page_content
+     -->
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Root styles -->
+    {% include 'templates/components/required-styles.html' %}
+
+    <!-- Imported styles -->
+    {% block imported_styles %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='static/styles/components/header.css') }}">
+
+    <!-- Root scripts -->
+    {% include 'templates/components/required-scripts.html' %}
+    <script src="{{ url_for('static', filename='static/scripts/components/header.js') }}" defer></script>
+
+    <!-- Imported scripts -->
+    {% block imported_scripts %}{% endblock %}
+
+    <!-- Flask vars -->
+    {% block flask_vars %}{% endblock %}
+
+    <!-- Fonts -->
+    {% include 'templates/components/fonts.html' %}
+
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% include 'templates/components/header.html' %}
+    <div id="page-content">
+        {% block page_content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -94,3 +94,9 @@ menu[data-open] {
 .section-title {
     color: var(--co-te-primary);
 }
+
+#page-content {
+    position: absolute;
+    top: 84px;
+    left: 0;
+}

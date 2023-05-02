@@ -9,4 +9,5 @@ dashboard_r = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 @dashboard_r.route('/')
 @login_required
 def index():
-    return render_template('templates/pages/dashboard/index.html')
+    __title__ = 'Dashboard'
+    return render_template('templates/pages/dashboard/index.html', t=__title__)

@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    {% include 'templates/components/head.html' %}
-
-    <script id="flask-vars" defer>
-        const dtApiUrl = "{{ url_for('api.system.datetime') }}";
+{% extends 'templates/components/page.html' %}
+{% block flask_vars %}
+    <script id="flask-vars" defer="defer">
+        const dtApiUrl = `{{ url_for('api.system.datetime') }}`
     </script>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='static/styles/components/header.css') }}">
-    <script src="{{ url_for('static', filename='static/scripts/components/header.js') }}" defer></script>
-</head>
-<body>
-    {% include 'templates/components/header.html' %}
-</body>
-</html>
+{% endblock %}
+{% block title %}{{ t }}{% endblock %}
+{% block page_content %}
+    Hello world!
+{% endblock %}

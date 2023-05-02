@@ -4,7 +4,7 @@ from package.databases import db, Users
 from package.config import AppSettings
 from package.applications_handler import ApplicationManager
 from package.system_handler import system
-from package.routes import api_r, authentication_r, dashboard_r
+from package.routes import api_r, applications_r, pages_r
 
 import package.package_handler as ph
 import package.helpers
@@ -36,8 +36,8 @@ system.init_settings(settings)
 
 # Blueprint registration
 app.register_blueprint(api_r)
-app.register_blueprint(authentication_r)
-app.register_blueprint(dashboard_r)
+app.register_blueprint(applications_r)
+app.register_blueprint(pages_r)
 
 # User loader
 @login_manager.user_loader

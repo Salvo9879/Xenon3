@@ -12,7 +12,7 @@
             {% endif %}
         </button>
         <button id="notifications-btn" class="action_bar-btn btn-clear al-el al-r al-a-center">
-            {% if current_user.is_notification_box_empty %}
+            {% if current_user.notification_box_empty %}
                 {% include 'static/assets/icons/notifications-empty.svg' %}
             {% else %}
                 {% include 'static/assets/icons/notifications-unread.svg' %}
@@ -32,7 +32,7 @@
 <menu class="al-el al-d-column">
     <div class="menu-section al-el al-r al-d-column">
         <h6 class="section-title">Commonly used</h6>
-        <button class="section-item btn-clear al-el al-d-row al-a-left al-a-center_v" data-redirect-enabled data-redirection_url="{{ url_for('dashboard.index') }}">
+        <button class="section-item btn-clear al-el al-d-row al-a-left al-a-center_v" data-redirect-enabled data-redirection_url="{{ url_for('pages.dashboard.index') }}">
             <span class="item-icon">{% include 'static/assets/icons/dashboard.svg' %}</span>
             <span class="item-name te-page-content of-e">Dashboard</span>
         </button>

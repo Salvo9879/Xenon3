@@ -41,7 +41,7 @@ class Users(db.Model, UserMixin):
     @property
     def notification_box_empty(self) -> bool:
         """ Returns `True` if the notification box is empty. """
-        return not []
+        return not self.notification_box
     
     @password.setter
     def password(self, pwd: str) -> None:
