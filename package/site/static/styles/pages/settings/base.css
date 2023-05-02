@@ -1,0 +1,33 @@
+* {
+    /* outline: 1px red solid; */
+}
+
+nav#settings-nav {
+    --al-eg: 20px;
+    --al-vp: 20px;
+    --al-hp: 20px;
+
+    width: calc(240px - var(--al-hp)*2);
+    height: calc(100vh - (84px + var(--al-vp)*2));
+
+    background-color: var(--co-ba-page_content-l1);
+}
+
+.settings_nav-btn {
+    --al-eg: 10px;
+    --al-hp: 10px;
+
+    width: 100%;
+    height: 24px;
+
+    /* outline: 1px red solid; */
+}
+
+.settings_nav_btn-svg {
+    width: 24px;
+    height: 24px;
+}
+
+.settings_nav_btn-name {
+    color: var(--co-te-primary);
+}

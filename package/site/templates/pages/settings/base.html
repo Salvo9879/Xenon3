@@ -1,0 +1,76 @@
+{% extends 'templates/components/page.html' %}
+
+{% block imported_styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='static/styles/pages/settings/base.css') }}">
+{% endblock %}
+
+{% block title %}Settings: {{ t }}{% endblock %}
+
+{% block page_content %}
+    <nav id="settings-nav" class="al-el al-d-column">
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.system') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/system.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">System</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.storage') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/storage.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Storage</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.hardware') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/hardware.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Hardware</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.internet') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/internet.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Internet</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.server') }}er">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/server.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Server</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.customization') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/customization.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Customization</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.security') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/security.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Security</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.logs') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/logs.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Logs</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.activity') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/activity.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Activity</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.profile_settings') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/profile_settings.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Profile settings</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.notifications') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/notifications.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Notifications</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.statistics') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/statistics.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Statistics</span>
+        </button>
+
+        <button class="settings_nav-btn btn-clear al-el al-r al-d-row al-a-left" data-redirect-enabled data-redirection_url="{{ url_for('pages.settings.support') }}">
+            <span class="settings_nav_btn-svg">{% include 'static/assets/icons/support.svg' %}</span>
+            <span class="settings_nav_btn-name te-page-content">Support</span>
+        </button>
+    </nav>
+{% endblock %}

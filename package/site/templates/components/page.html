@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- BLOCKS:
+    <!-- 
+        BLOCKS:
         - imported_styles
         - imported_scripts
         - flask_vars
@@ -18,17 +19,18 @@
     {% include 'templates/components/required-styles.html' %}
 
     <!-- Imported styles -->
-    {% block imported_styles %}{% endblock %}
     <link rel="stylesheet" href="{{ url_for('static', filename='static/styles/components/header.css') }}">
+    {% block imported_styles %}{% endblock %}
 
     <!-- Root scripts -->
-    {% include 'templates/components/required-scripts.html' %}
     <script src="{{ url_for('static', filename='static/scripts/components/header.js') }}" defer></script>
+    {% include 'templates/components/required-scripts.html' %}
 
     <!-- Imported scripts -->
     {% block imported_scripts %}{% endblock %}
 
     <!-- Flask vars -->
+    <script class="flask-vars" defer>const dtApiUrl=`{{ url_for('api.system.datetime') }}`;</script>
     {% block flask_vars %}{% endblock %}
 
     <!-- Fonts -->
